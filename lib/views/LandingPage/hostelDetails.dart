@@ -27,7 +27,7 @@ class _HostelDetailsState extends State<HostelDetails> {
   Widget build(BuildContext context) {
     return
       ViewModelBuilder<HostelDetailModel>.reactive(
-        viewModelBuilder: ()=>,
+        viewModelBuilder: ()=>HostelDetailModel(),
         builder: (context,viewModel,child) {
           return AlertDialog(
             backgroundColor: Color.fromRGBO(254, 232, 152, 1.0),

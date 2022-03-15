@@ -77,11 +77,13 @@ class LocationModel{
   }
 }
 
+  final LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.best,
+      timeLimit:Duration(milliseconds: 1000
+  ));
   locationStream() async{
     // check for the location permission status for the location
-      _positionStream = Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.best,
-        intervalDuration:Duration(milliseconds: 1000)
-      ).listen(
+      _positionStream = Geolocator.getPositionStream(locationSettings: locationSettings).listen(
               (Position position) {
             print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
             _positionValue=position;
