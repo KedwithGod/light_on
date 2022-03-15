@@ -19,22 +19,12 @@ workflows:
           include: true
           source: true
     scripts:
-      - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
-        script: |
-                    keychain initialize
-      - name: Fetch signing files
-        script: |
-                    app-store-connect fetch-signing-files $(xcode-project detect-bundle-id) --type IOS_APP_STORE --create
-      - name: Add certificates to keychain
-        script: |   
-                    keychain add-certificates 
-      - name: Increment build number
-        script: agvtool new-version -all $(($BUILD_NUMBER +1))
-      - name: Set up code signing settings on Xcode project
-        script: xcode-project use-profiles
-      - name: Build ipa for distribution
-        script: |
-                    xcode-project build-ipa --workspace "MyXcodeWorkspace.xcworkspace" --scheme "MyScheme" -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO 
+            - name: Install CocoaPods dependencies
+              script: |
+                                pod install
+            - name: Build ipa for distribution
+              script: |
+                                xcodebuild build -workspace "$XCODE_WORKSPACE" -scheme "$XCODE_SCHEME" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12 Pro,OS=14.5' -configuration Debug CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO 
         artifacts:
     artifacts:
       - build/ios/ipa/*.ipa
