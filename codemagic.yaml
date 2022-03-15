@@ -33,7 +33,7 @@ workflows:
       - name: Set up code signing settings on Xcode project
         script: xcode-project use-profiles
       - name: Build ipa for distribution
-        script: - xcode-project build-ipa --project "MyXcodeProject.xcodeproj" --scheme "MyScheme"
+        script: xcode-project build-ipa --project "MyXcodeProject.xcodeproj" --scheme "MyScheme"
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
